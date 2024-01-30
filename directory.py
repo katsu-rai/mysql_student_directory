@@ -11,28 +11,26 @@ password = database_config['password']
 
 try: 
 
-    cnxn = myc.connect(
+    connection = myc.connect(
     host=server,
     port=port,
     database=database,
     user=username,
     password=password
     )
-    if cnxn.is_connected():
-        cursor =  cnxn.cursor()
-        db_Info = cnxn.get_server_info()
+    if connection.is_connected():
+        cursor =  connection.cursor()
+        db_Info = connection.get_server_info()
         print("Connected to MySQL Server version ", db_Info)
         
 
 except myc.Error as e:
     print("Error while connecting to MySQL", e)
 
-
-
-
 # Menu list 
 choice = None
 while choice != "5":
+    print()
     print ("1. display the user table")
     print ("2. add the user to the table")
     print ("3. update the user information")
@@ -45,29 +43,56 @@ while choice != "5":
         cursor.execute("SELECT * FROM student")
         rows = cursor.fetchall()
         if rows:
-            custom_column_names = ['ID','First name','Last name','email','major_id']
+            custom_column_names = ['student_id','first name','last name','email','major_id']
             pf = pd.DataFrame(rows)
             pf.columns = custom_column_names
-            print (pf)
+            print (pf.to_string(index=False))
+        else:
+            print("There is no student data")
 
     elif choice == "2" : 
         last_name = input("what is your last name: ")
         first_name = input("What is your first name: ")
-        birthday = input("What is your email?")
-        cursor.execute(f"INSERT INTO test (Last_name, First_name, Birthday) VALUES ('{last_name}', '{first_name}','{birthday}');")
-        cnxn.commit()
+        email = input("What is your email?: ")
+        cursor.execute(f"INSERT INTO student (student_id, firstName, lastName, email, major_id) VALUES (DEFAULT, '{last_name}', '{first_name}','{email}', 1);")
+        connection.commit()
         print ('add actor sucessfully')
     
     elif choice == "3" : 
-        user_id = input("Which user ID whats to update: ")
-        last_name = input("User new last name: ")
-        first_name = input("User new first name: ")
-        birthday = input("User new birthday: ")
-        cursor.execute(f"UPDATE test SET Last_name = '{last_name}', First_name = '{first_name}', Birthday = '{birthday}' WHERE ID = {user_id};")
-        cnxn.commit()
+        cursor.execute("SELECT * FROM student")
+        rows = cursor.fetchall()
+        if rows:
+            custom_column_names = ['student_id','first name','last name','email','major_id']
+            pf = pd.DataFrame(rows)
+            pf.columns = custom_column_names
+            print (pf.to_string(index=False))
+        else:
+            print("There is no student data")
+
+        print()
+
+        student_id = input("Which student ID whats to update: ")
+        last_name = input("Student's new last name: ")
+        first_name = input("Student's new first name: ")
+        email = input("Student's new email: ")
+        cursor.execute(f"UPDATE student SET lastName = '{last_name}', firstName = '{first_name}', emai = '{email}' WHERE student_id = {student_id};")
+        connection.commit()
         print (' update actor sucessfully')
+
     elif choice == "4" : 
+        cursor.execute("SELECT * FROM student")
+        rows = cursor.fetchall()
+        if rows:
+            custom_column_names = ['student_id','first name','last name','email','major_id']
+            pf = pd.DataFrame(rows)
+            pf.columns = custom_column_names
+            print (pf.to_string(index=False))
+        else:
+            print("There is no student data")
+
+        print()
+
         delete_id = input("Which ID you want to delete: ")
-        cursor.execute(f"DELETE FROM `test`.`test` WHERE `ID` = {delete_id};")
-        cnxn.commit()
+        cursor.execute(f"DELETE FROM student WHERE student_id = {delete_id};")
+        connection.commit()
         print ('delete sucessfuly')
