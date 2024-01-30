@@ -49,13 +49,11 @@ while choice != "5":
             pf = pd.DataFrame(rows)
             pf.columns = custom_column_names
             print (pf)
-        else:
-            cursor.execute("CREATE TABLE IF NOT EXISTS `test`.`test` (`ID` INT AUTO_INCREMENT,`First_name` VARCHAR(45) NOT NULL,`Last_name` VARCHAR(45) NOT NULL,`Birthday` DATE NOT NULL,PRIMARY KEY (`ID`));")
-            print("no data ")
+
     elif choice == "2" : 
         last_name = input("what is your last name: ")
         first_name = input("What is your first name: ")
-        birthday = input("When is your birthday yyyy-mm-dd: ")
+        birthday = input("What is your email?")
         cursor.execute(f"INSERT INTO test (Last_name, First_name, Birthday) VALUES ('{last_name}', '{first_name}','{birthday}');")
         cnxn.commit()
         print ('add actor sucessfully')
