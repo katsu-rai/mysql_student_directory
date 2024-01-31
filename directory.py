@@ -75,7 +75,7 @@ while choice != "5":
         last_name = input("Student's new last name: ")
         first_name = input("Student's new first name: ")
         email = input("Student's new email: ")
-        cursor.execute(f"UPDATE student SET lastName = '{last_name}', firstName = '{first_name}', emai = '{email}' WHERE student_id = {student_id};")
+        cursor.execute(f"UPDATE student SET lastName = '{last_name}', firstName = '{first_name}', email = '{email}' WHERE student_id = {student_id};")
         connection.commit()
         print (' update actor sucessfully')
 

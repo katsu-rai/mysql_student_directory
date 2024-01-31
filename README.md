@@ -4,7 +4,7 @@ I developed a software that interact with a relational database in MySQL.
 I built this to learn how I can connect python code with MySQL.
 
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/YNbgI8wvrw0)
 
 # Development Environment
 
@@ -12,8 +12,7 @@ MySQL
 Visual Studio Code
 Python
 mysql.connector
-
-{Describe the programming language that you used}
+Panda
 
 # Useful Websites
 
